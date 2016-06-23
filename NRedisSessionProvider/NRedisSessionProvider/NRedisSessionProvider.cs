@@ -16,6 +16,7 @@ namespace NRedisProvider
 			get;set;
 		}
 
+
 		public IRedisClientsManager ClientManager
 		{
 			get
@@ -24,6 +25,16 @@ namespace NRedisProvider
 			}
 		}
 
+		/// <summary>
+		/// <code>
+		///localhost
+		///127.0.0.1:6379
+		///redis://localhost:6379
+		///password @localhost:6379
+		///clientid:password @localhost:6379
+		///redis://clientid:password@localhost:6380?ssl=true&db=1
+		/// </code>
+		/// </summary>
 		protected string RedisHost = "localhost:6379";
 		protected bool Pooled = false;
 		protected string Prefix = "_NRSP_";
