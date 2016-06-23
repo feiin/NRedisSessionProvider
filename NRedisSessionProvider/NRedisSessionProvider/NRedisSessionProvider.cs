@@ -92,7 +92,13 @@ namespace NRedisProvider
 			}
 		}
 
-		public static void CreateClientManager(string host,bool pooled)
+		/// <summary>
+		/// Inits the redis config.
+		/// </summary>
+		/// <returns>The redis config.</returns>
+		/// <param name="host">host see href="https://github.com/feiin/NRedisSessionProvider"</param>
+		/// <param name="pooled">Pooled.</param>
+		public static void InitRedisConfig(string host,bool pooled)
 		{
 			 
 			if (pooled == true)

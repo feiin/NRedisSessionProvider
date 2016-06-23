@@ -10,8 +10,8 @@ namespace MVCWebTest
 		{
 			AreaRegistration.RegisterAllAreas();
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
-			//NRedisProvider.NRedisSessionProvider.
-			NRedisProvider.NRedisSessionProvider.CreateClientManager("localhost:6379", false);
+ 			//NRedisProvider.NRedisSessionProvider.
+			NRedisProvider.NRedisSessionProvider.InitRedisConfig("localhost:6379", false);
 		}
 	}
 }
