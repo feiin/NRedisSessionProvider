@@ -3,11 +3,67 @@ using System.Web;
 using System.Web.SessionState;
 using System.Configuration;
 using System.Configuration.Provider;
+using NServiceKit.Redis;
 
 namespace NRedisProvider
 {
 	public class NRedisSessionProvider : SessionStateStoreProviderBase
 	{
+		private IRedisClientsManager _clientManager;
+
+		public static IRedisClientsManager ConfigClientManager
+		{
+			get;set;
+		}
+
+		public IRedisClientsManager ClientManager
+		{
+			get
+			{
+				return _clientManager;
+			}
+		}
+
+		protected string RedisHost = "localhost:6379";
+		protected bool Pooled = false;
+		protected string Prefix = "_NRSP_";
+
+		private IRedisClientsManager CreateClientManager()
+		{
+			 
+			if (Pooled == true)
+			{
+				return new PooledRedisClientManager(RedisHost);
+			}
+			else
+			{
+				return new BasicRedisClientManager(RedisHost);
+			}
+		}
+
+		public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
+		{
+			if (ConfigClientManager == null)
+			{
+				if (!string.IsNullOrEmpty(config["host"]))
+				{
+					RedisHost = config["host"];
+				}
+
+				if (!string.IsNullOrWhiteSpace(config["pooled"]))
+				{
+					Pooled = Convert.ToBoolean("pooled");
+				}
+
+				_clientManager = CreateClientManager(); 
+
+			}
+			else {
+				_clientManager = ConfigClientManager; 
+			}
+
+			base.Initialize(name, config);
+		}
 		public override SessionStateStoreData CreateNewStoreData(HttpContext context, int timeout)
 		{
 			throw new NotImplementedException();
