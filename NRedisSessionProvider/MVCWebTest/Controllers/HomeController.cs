@@ -7,7 +7,7 @@ using System.Web.Mvc.Ajax;
 
 namespace MVCWebTest.Controllers
 {
-	//[Serializable]
+	[Serializable]
 	public class User
 	{
 		public string UserName { get; set; }

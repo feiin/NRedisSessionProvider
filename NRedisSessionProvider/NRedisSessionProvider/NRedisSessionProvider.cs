@@ -92,6 +92,19 @@ namespace NRedisProvider
 			}
 		}
 
+		public static void CreateClientManager(string host,bool pooled)
+		{
+			 
+			if (pooled == true)
+			{
+			     ConfigClientManager = new PooledRedisClientManager(host);
+			}
+			else
+			{
+				 ConfigClientManager = new BasicRedisClientManager(host);
+			}
+		}
+
 
 		public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
 		{
