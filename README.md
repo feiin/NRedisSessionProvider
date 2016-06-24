@@ -29,18 +29,18 @@ example:
 
 ###Configuring redis 
 
-1. specify the sessionState providers of web.config 
+-  specify the sessionState providers of web.config 
 
 ```
  <sessionState mode="Custom" customProvider="NRedisSessionProvider"  timeout="120">
       <providers>
-        <add name="NRedisSessionProvider" type="NRedisProvider.NRedisSessionProvider,NRedisSessionProvider" host="127.0.0.1:6379" pooled="false"/>
+        <add name="NRedisSessionProvider" type="NRedisProvider.NRedisSessionProvider,NRedisSessionProvider" host="127.0.0.1:6379" pooled="false" prefix="_sess"/>
       </providers>
     </sessionState>
     
 ```
 
-2.or configuring redis's config in your application (Global.asax application_start)
+- or configuring redis's config in your application (Global.asax application_start)
 
 ```
  public class Global : HttpApplication
@@ -58,7 +58,9 @@ example:
 
 ###options
 
-host:
+- prefix: session key prefix for redis(`optional`)
+
+- host:
 
 ```
  localhost
@@ -70,4 +72,4 @@ host:
  
 ```
 
-pooled:`true/false`  default:`false`
+- pooled:`true/false`  default:`false`
