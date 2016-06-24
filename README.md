@@ -32,7 +32,7 @@ example:
 1. specify the sessionState providers of web.config 
 
 ```
- <sessionState mode="Custom" customProvider="NRedisSessionProvider" cookieless="false" timeout="120">
+ <sessionState mode="Custom" customProvider="NRedisSessionProvider"  timeout="120">
       <providers>
         <add name="NRedisSessionProvider" type="NRedisProvider.NRedisSessionProvider,NRedisSessionProvider" host="127.0.0.1:6379" pooled="false"/>
       </providers>
