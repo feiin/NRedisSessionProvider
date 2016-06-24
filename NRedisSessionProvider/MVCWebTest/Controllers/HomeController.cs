@@ -5,19 +5,23 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 
+
 namespace MVCWebTest.Controllers
 {
-	[Serializable]
+ 	
 	public class User
 	{
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public int Sex { get; set; }
 		public DateTime CreatedAt { get; set; }
+		public string Department { get; set; }
 	}
 
 	public class HomeController : Controller
 	{
+ 
+
 		public ActionResult Index()
 		{
 			var mvcName = typeof(Controller).Assembly.GetName();
@@ -38,12 +42,10 @@ namespace MVCWebTest.Controllers
 
 			}
 			else {
-				var u = (User)Session["user"];
+				var u = Session["user"] as User;
 				ViewData["Info"] =  u.UserName + " CreatedAt" + u.CreatedAt;
 			}
 			Session["x"] = "hello";
-
-
 			return View();
 		}
 

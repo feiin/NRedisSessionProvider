@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Web.SessionState;
 
 namespace NRedisSessionProvider
@@ -11,8 +13,7 @@ namespace NRedisSessionProvider
 		public int Timeout { get; set; }
 		public bool Locked { get; set; }
 		public int Flags { get; set; }
-		public byte[] Data { get; set; }
-
+		public Dictionary<string, object> Data { get; set; }
 	}
 }
 

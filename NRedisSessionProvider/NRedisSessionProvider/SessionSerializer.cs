@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.SessionState;
@@ -7,43 +8,37 @@ namespace NRedisSessionProvider
 {
 	public class SessionSerializer
 	{
-		public static byte[] Serialize(SessionStateItemCollection items)
+		public static Dictionary<string, object> Serialize(SessionStateItemCollection items)
 		{
-			using (var ms = new MemoryStream())
+			if (items == null || items.Count == 0)
 			{
-				using (var writer = new BinaryWriter(ms))
-				{
-					if (items != null)
-						items.Serialize(writer);
+				return null;
 
-					writer.Close();
-
-					return ms.ToArray();
-				}
 			}
+
+			var  dict = new Dictionary<string, object>(items.Count);
+			for (int i = 0; i < items.Keys.Count; i++)
+			{
+				var key = items.Keys[i];
+				dict.Add(key, items[key]);
+			}
+			return dict;
 		}
 
-		public static SessionStateItemCollection Deserialize(byte[] sessionData)
+		public static SessionStateItemCollection Deserialize(Dictionary<string, object> sessionData)
 		{
-			if (sessionData == null)
+			if (sessionData == null || sessionData.Count == 0)
 			{
 				return new SessionStateItemCollection();
 			}
 
-			using (var ms = new MemoryStream(sessionData))
+			var collections = new SessionStateItemCollection();
+
+			foreach (KeyValuePair<string, object> kvp in sessionData)
 			{
-				var sessionItems = new SessionStateItemCollection();
-
-				if (ms.Length > 0)
-				{
-					using (BinaryReader reader = new BinaryReader(ms))
-					{
-						sessionItems = SessionStateItemCollection.Deserialize(reader);
-					}
-				}
-
-				return sessionItems;
+				collections[kvp.Key] = kvp.Value;
 			}
+			return collections;
 		}
 	}
 }
