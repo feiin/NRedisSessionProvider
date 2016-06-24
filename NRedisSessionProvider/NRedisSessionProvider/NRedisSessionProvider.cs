@@ -111,9 +111,13 @@ namespace NRedisProvider
 			}
 		}
 
-
 		public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
 		{
+			if (!string.IsNullOrWhiteSpace(config["prefix"]))
+			{
+				Prefix = config["prefix"];
+			}
+
 			if (ConfigClientManager == null)
 			{
 				if (!string.IsNullOrEmpty(config["host"]))
